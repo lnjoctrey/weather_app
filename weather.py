@@ -1,8 +1,9 @@
 from email.mime import image
+from re import M
 import requests as r
 import streamlit as st
 from PIL import Image
-import time 
+import datetime 
 
 
 def main():
@@ -13,34 +14,60 @@ def main():
     - UI through streamlit  
     
     """ 
+    # defining API parameters
     API_KEY = "ff556c8a56917d1b6a26df7cad50b4b0"
+    API_KEY2 = "8041d04c4e8759a4836392b7f899447d"
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
+    BASE_URL2 = "http://api.openweathermap.org/data/2.5/forecast"
 
-    options = ["Check Current Weather", "About App", "Developer"]
+    #setting up the sidebar
+    options = ["Check Current Weather","Weather Forecast", "About App", "Developer"]
     with st.sidebar:
         radio = st.radio(
             'Hello',
             (options)
         )
-    # Front Current Weather App page
+    #Front Current Weather App page
     if radio == options[0]:
         st.title('Current Weather')
         weather_pic = Image.open('resources/lago-di-limides-3025780_1920.jpg')
         st.image(weather_pic, caption='Credit: Image by Julius Silver from Pixabay ')
         
         city = st.text_input("Enter a city name: ")
-        request_url = f"{BASE_URL}?appid={API_KEY}&q={city}"
+        request_url = f"{BASE_URL}?appid={API_KEY}&units=metric&q={city}"
         response = r.get(request_url)
 
         if response.status_code == 200:
             data = response.json()
             weather = data['weather'][0]['description']
             st.write("Current Weather: ", weather)
-            temperature = round(data['main']['temp'] - 273.15, 2)
+            temperature = round(data['main']['temp'], 2)
             st.write("Temperature: ", temperature, "celcius")
 
-    # About the App Page
     if radio == options[1]:
+        st.title('Weather Forecast')
+        st.write('This section is still under development')
+        weather_pic = Image.open('resources/lightning-2660929_1920.jpg')
+        st.image(weather_pic, caption='Credit: Image by Gerd Altmann from Pixabay ')
+
+        city = st.text_input("Enter a city name: ")
+        request_url = f"{BASE_URL2}?appid={API_KEY2}&units=metric&q={city}"
+        response2 = r.get(request_url)
+
+        if response2.status_code == 200:
+            data2 = response2.json()
+            wf = data2["list"][:11][-1]
+            dt = wf['dt_txt']
+            st.write("Date: ", dt)
+            st.write("Clouds: ", wf['weather'][0]['description'])
+            st.write("Humidity: ", wf["main"]['humidity'])
+            #st.write("Minimum Temp: ", round(wf["main"]['temp_min'], 2), "celcius")
+            st.write("Maximum Temp: ", round(wf["main"]['temp_max'], 2), "celcius")
+            st.write("Wind Speed: ", wf["wind"]["speed"], "kph")
+
+
+    # About the App Page
+    if radio == options[2]:
         st.subheader("About App")
         app_pic = Image.open('resources/mobile-phone-1875813_1920.jpg')
         st.image(app_pic, caption='Credit: Image by David from Pixabay')
@@ -52,7 +79,7 @@ def main():
             """
             )
 
-    if radio == options[2]:
+    if radio == options[3]:
         st.subheader("Developer")
         profile_pic = Image.open('resources/IMG_20191006_073325_792.jpg')
         st.image(profile_pic, caption='Lungisa Joctrey')
