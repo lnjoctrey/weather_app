@@ -13,7 +13,7 @@ def main():
     API_KEY = "ff556c8a56917d1b6a26df7cad50b4b0"
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 
-    options = ["Check Weather", "About", "Developer"]
+    options = ["Check Weather", "About App", "Developer"]
     with st.sidebar:
         radio = st.radio(
             'Hello',
@@ -33,15 +33,19 @@ def main():
             st.write("Current Weather: ", weather)
             temperature = round(data['main']['temp'] - 273.15, 2)
             st.write("Temperature: ", temperature, "celcius")
-            
-        else:
-            print("An error occurred")
 
     if radio == options[1]:
         st.subheader("About App")
+        st.markdown(
+            """This a simple app that gives you the current weather report.
+            This app gets it's weather report througn the '**Open Weather Map**' API. 
+            \n
+            \n I tried the project out just to see how it would work via **Streamlit.**
+            """
+            )
 
     if radio == options[2]:
-        st.subheader("About Developer")
+        st.subheader("Developer")
 
 # make it run online
 if __name__ == '__main__':
