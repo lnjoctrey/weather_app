@@ -72,10 +72,11 @@ def main():
         app_pic = Image.open('resources/mobile-phone-1875813_1920.jpg')
         st.image(app_pic, caption='Credit: Image by David from Pixabay')
         st.markdown(
-            """This a simple app that gives you the current weather report.
+            """This is a simple app that gives you the current weather report.
             This app gets it's weather report througn the '**Open Weather Map**' API. 
             \n
             \n I tried the project out just to see how it would work via **Streamlit.**
+            I am still working on the 'Weather Forecast' section.
             """
             )
 
