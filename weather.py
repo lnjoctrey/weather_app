@@ -1,5 +1,7 @@
+from email.mime import image
 import requests as r
 import streamlit as st
+from PIL import Image 
 
 
 def main():
@@ -21,7 +23,9 @@ def main():
         )
 
     if radio == options[0]:
-        st.title('Weather App') 
+        st.title('Weather App')
+        weather_pic = Image.open('resources/clouds-1768967_1920.jpg')
+        st.image(weather_pic, caption='Credit: Image by Džoko Stach from Pixabay')
         
         city = st.text_input("Enter a city name: ")
         request_url = f"{BASE_URL}?appid={API_KEY}&q={city}"
@@ -46,6 +50,16 @@ def main():
 
     if radio == options[2]:
         st.subheader("Developer")
+        profile_pic = Image.open('resources/IMG_20191006_073325_792.jpg')
+        st.image(profile_pic, caption='Lungisa Joctrey')
+        st.markdown(
+            """
+            Hi, I am Lungisa and I am based in South Africa. I am a recently qualified Data Scientist and I am actively searching for a job.\n
+            I have two years experience in Python Programming, and one year experience in Statistical Analysis, SQL, Power BI, Anaconda, Jupyter Lab and Jupyter Notebook.
+            I am a self driven, fast learner and I am not afraid to try new things.
+        
+            """)
+        
 
 # make it run online
 if __name__ == '__main__':
