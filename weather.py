@@ -24,7 +24,7 @@ def main():
         )
     # Front Current Weather App page
     if radio == options[0]:
-        st.title('Current Weather App')
+        st.title('Current Weather')
         weather_pic = Image.open('resources/lago-di-limides-3025780_1920.jpg')
         st.image(weather_pic, caption='Credit: Image by Julius Silver from Pixabay ')
         
