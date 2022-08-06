@@ -1,7 +1,8 @@
 from email.mime import image
 import requests as r
 import streamlit as st
-from PIL import Image 
+from PIL import Image
+import time 
 
 
 def main():
@@ -21,11 +22,11 @@ def main():
             'Hello',
             (options)
         )
-    # Front Weather App page
+    # Front Current Weather App page
     if radio == options[0]:
         st.title('Current Weather App')
-        weather_pic = Image.open('resources/clouds-1768967_1920.jpg')
-        st.image(weather_pic, caption='Credit: Image by Džoko Stach from Pixabay')
+        weather_pic = Image.open('resources/lago-di-limides-3025780_1920.jpg')
+        st.image(weather_pic, caption='Credit: Image by Julius Silver from Pixabay ')
         
         city = st.text_input("Enter a city name: ")
         request_url = f"{BASE_URL}?appid={API_KEY}&q={city}"
