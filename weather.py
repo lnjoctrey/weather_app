@@ -2,8 +2,14 @@ from email.mime import image
 from re import M
 import requests as r
 import streamlit as st
+import streamlit.components.v1 as components
 from PIL import Image
-import datetime 
+import datetime
+
+
+
+
+
 
 
 def main():
@@ -14,12 +20,20 @@ def main():
     - UI through streamlit  
     
     """ 
+    
     # defining API parameters
     API_KEY = "ff556c8a56917d1b6a26df7cad50b4b0"
     API_KEY2 = "8041d04c4e8759a4836392b7f899447d"
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
     BASE_URL2 = "http://api.openweathermap.org/data/2.5/forecast"
 
+    overcast_pic =Image.open('resources/overcast.jpg')
+    rain_pic = Image.open('resources/rainy.jpg')
+    clearsky_pic = Image.open('resources/clear_sky.jpg')
+    partlycloudy_pic = Image.open('resources/partly_cloudy.jpg')
+    fewclouds_pic = Image.open('resources/few_clouds.jpg')
+    scatterclouds_pic = Image.open('resources/scattered_clouds.jpg')
+    
     #setting up the sidebar
     options = ["Check Current Weather","Weather Forecast", "About App", "Developer"]
     with st.sidebar:
@@ -27,11 +41,16 @@ def main():
             'Hello',
             (options)
         )
+        html_string = '''   
+                <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+                <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="lungisa" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://uk.linkedin.com/in/lungisa?trk=profile-badge">Lungisa Nhlakanipho Joctrey</a></div>
+        '''
+        components.html(html_string)
+        
     #Front Current Weather App page
     if radio == options[0]:
         st.title('Current Weather')
-        weather_pic = Image.open('resources/lago-di-limides-3025780_1920.jpg')
-        st.image(weather_pic, caption='Credit: Image by Julius Silver from Pixabay ')
+
         
         city = st.text_input("Enter a city name: ")
         request_url = f"{BASE_URL}?appid={API_KEY}&units=metric&q={city}"
@@ -44,11 +63,32 @@ def main():
             temperature = round(data['main']['temp'], 2)
             st.write("Temperature: ", temperature, "celcius")
 
+            if weather == 'overcast clouds':
+                weather_pic = overcast_pic
+                st.image(weather_pic)
+            elif weather == 'rainy':
+                weather_pic = rain_pic
+                st.image(weather_pic)
+            elif weather == 'partly cloudy':
+                weather_pic = partlycloudy_pic
+                st.image(weather_pic)
+            elif weather == 'clear sky':
+                weather_pic = clearsky_pic
+                st.image(weather_pic)
+            elif weather == 'few clouds':
+                weather_pic = fewclouds_pic
+                st.image(weather_pic)
+            elif weather == 'scattered clouds':
+                weather_pic = scatterclouds_pic
+                st.image(weather_pic)
+
+            else:
+                weather_pic = Image.open('resources/lago-di-limides-3025780_1920.jpg')
+                st.image(weather_pic, caption='Credit: Image by Julius Silver from Pixabay ')
+
     if radio == options[1]:
         st.title('Weather Forecast')
         st.write('This section is still under development')
-        weather_pic = Image.open('resources/lightning-2660929_1920.jpg')
-        st.image(weather_pic, caption='Credit: Image by Gerd Altmann from Pixabay ')
 
         city = st.text_input("Enter a city name: ")
         request_url = f"{BASE_URL2}?appid={API_KEY2}&units=metric&q={city}"
@@ -59,11 +99,34 @@ def main():
             wf = data2["list"][:11][-1]
             dt = wf['dt_txt']
             st.write("Date: ", dt)
-            st.write("Clouds: ", wf['weather'][0]['description'])
+            weather = wf['weather'][0]['description']
+            st.write("Clouds: ", weather)
             st.write("Humidity: ", wf["main"]['humidity'])
             #st.write("Minimum Temp: ", round(wf["main"]['temp_min'], 2), "celcius")
             st.write("Maximum Temp: ", round(wf["main"]['temp_max'], 2), "celcius")
             st.write("Wind Speed: ", wf["wind"]["speed"], "kph")
+            if weather == 'overcast clouds':
+                weather_pic = overcast_pic
+                st.image(weather_pic)
+            elif weather == 'rainy':
+                weather_pic = rain_pic
+                st.image(weather_pic)
+            elif weather == 'partly cloudy':
+                weather_pic = partlycloudy_pic
+                st.image(weather_pic)
+            elif weather == 'clear sky':
+                weather_pic = clearsky_pic
+                st.image(weather_pic)
+            elif weather == 'few clouds':
+                weather_pic = fewclouds_pic
+                st.image(weather_pic)
+            elif weather == 'scattered clouds':
+                weather_pic = scatterclouds_pic
+                st.image(weather_pic)
+
+            else:
+                weather_pic = Image.open('resources/lago-di-limides-3025780_1920.jpg')
+                st.image(weather_pic, caption='Credit: Image by Julius Silver from Pixabay ')
 
 
     # About the App Page
@@ -92,7 +155,7 @@ def main():
         
             """)
         
-
+    
 # make it run online
 if __name__ == '__main__':
     main()
